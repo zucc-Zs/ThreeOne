@@ -1,0 +1,156 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping package="cn.edu.zucc.personplan.model">  
+    <!-- 标识一个类的xml映射,name为类名,table为表名 -->  
+    <class name="BeanSchool" table="tbl_school">  
+        <!-- 主键的设置,generator标识主键生成方式,因为native便于数据库的移植所以.嘿嘿!你懂的 -->  
+        <id name="school_id" type="int">  
+            <column name="school_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <!-- 这里配了该类一个属性街道名称 name属性字段,column,数据库对应列 -->  
+        <property name="school_name" type="string" column="school_name" />  
+        <!-- 这里同上,写法不同而已 -->  
+        <property name="school_province" type="string">  
+            <column name="school_province" />  
+        </property>  
+        <property name="school_city" type="string" column="school_city" /> 
+        <property name="school_evaluate" type="string" column="school_evaluate" />  
+        <property name="school_advantage" type="string" column="school_advantage" />  
+        
+        <set name="aMajors">
+    		<key column="school_id"/>
+    		<one-to-many class="BeanSchool"/>
+    	</set>
+    </class> 
+ 
+    <class name="BeanMajor" table="tbl_major">  
+  
+        <id name="major_id" type="int">  
+            <column name="major_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="major_name" type="string" column="major_name" />  
+        <property name="major_type" type="string" column="major_type" />   
+        <property name="school_id" type="int" column="school_id" insert="false" update="false"/>
+        <property name="major_advantage" type="string" column="major_advantage" />
+        <many-to-one name="aSchool" column="school_id" lazy="false"/>
+    </class>  
+       
+    <class name="BeanUser" table="tbl_user">  
+  
+        <id name="user_id" type="string">  
+            <column name="user_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="user_name" type="string" column="user_name" />  
+        <property name="user_grade" type="string" column="user_grade" /> 
+        <property name="user_pwd" type="string" column="user_pwd" />  
+    </class> 
+    
+    <class name="BeanStudent" table="tbl_student">  
+  
+        <id name="student_id" type="string">  
+            <column name="student_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="student_testid" type="int" column="student_testid" />  
+        <property name="student_name" type="string" column="student_name" /> 
+        <property name="student_sex" type="string" column="student_sex" /> 
+        <property name="student_phoneNumber" type="string" column="student_phoneNumber" /> 
+        <property name="student_middleSchool" type="string" column="student_middleSchool" /> 
+        <property name="student_province" type="string" column="student_province" /> 
+        <property name="student_portrait" type="java.sql.Blob" column="student_portrait" />                   
+    </class> 
+    
+    <class name="BeanSubject" table="tbl_subject">  
+  
+        <id name="subject_id" type="int">  
+            <column name="subject_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="subject_name" type="string" column="subject_name" /> 
+                 
+    </class> 
+    
+    <class name="BeanStudyTest" table="tbl_studyTest">  
+  
+        <id name="studyTest_order" type="int">  
+            <column name="studyTest_order"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="student_id" type="string" column="student_id" />  
+        <property name="subject_id" type="int" column="subject_id" /> 
+        <property name="studyTest_grade" type="string" column="studyTest_grade" /> 
+            
+    </class> 
+    
+    <class name="BeanSelectTest" table="tbl_selectTest">  
+  
+        <id name="selectTest_order" type="int">  
+            <column name="selectTest_order"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="student_id" type="string" column="student_id" />  
+        <property name="subject_id" type="int" column="subject_id" /> 
+        <property name="selectTest_grade" type="string" column="selectTest_grade" /> 
+            
+    </class> 
+    
+    <class name="BeanSpeciality" table="tbl_speciality">  
+  
+        <id name="speciality_order" type="int">  
+            <column name="speciality_order"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="student_id" type="string" column="student_id" /> 
+        <property name="speciality_type" type="string" column="speciality_type" /> 
+        <property name="speciality_grade" type="string" column="speciality_grade" /> 
+        <property name="speciality_evidence" type="string" column="speciality_evidence" /> 
+        
+            
+    </class> 
+    
+    
+    <class name="BeanMajorPlan" table="tbl_mojorPlan">  
+  
+        <id name="majorPlan_order" type="int">  
+            <column name="majorPlan_order"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="mojorPlan_year" type="int" column="mojorPlan_year" /> 
+        <property name="major_id" type="int" column="major_id" /> 
+        <property name="selectSubject_name" type="string" column="selectSubject_name" /> 
+        <property name="plan_num" type="string" column="plan_num" /> 
+        <property name="mojorPlan_tuition" type="string" column="mojorPlan_tuition" /> 
+        <property name="mojorPlan_ask" type="string" column="mojorPlan_ask" /> 
+        <property name="mojorPlan_grade" type="string" column="mojorPlan_grade" /> 
+            
+    </class> 
+    
+    <class name="BeanSchoolPlan" table="tbl_schoolPlan">  
+  
+        <id name="school_id" type="int">  
+            <column name="school_id"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="schoolPlan_ask" type="string" column="schoolPlan_ask" /> 
+        <property name="sign_startTime" type="date" column="sign_startTime" /> 
+        <property name="sign_endTime" type="date" column="sign_endTime" /> 
+        <property name="sign_method" type="string" column="sign_method" /> 
+        
+            
+    </class> 
+    
+    <class name="BeanRecommend" table="tbl_recommend">  
+  
+        <id name="recommend_order" type="int">  
+            <column name="recommend_order"/>  
+            <generator class="assigned"/>  
+        </id>  
+        <property name="student_id" type="string" column="student_id" /> 
+        <property name="major_id" type="int" column="major_id" /> 
+        <property name="recommend_reason" type="string" column="recommend_reason" /> 
+        
+            
+    </class> 
+</hibernate-mapping>  
